@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Suku - Place where students, learn, grow and earn
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
