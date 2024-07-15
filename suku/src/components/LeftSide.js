@@ -56,6 +56,10 @@ const LeftSide =()=>{
 
 const Container = styled.div`
 grid-area: leftside;
+
+@media (max-width:768px) {
+display:none;
+}
 `;
 
 const ArtCard = styled.div`
