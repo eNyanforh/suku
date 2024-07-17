@@ -1,15 +1,20 @@
+import { connect } from "react-redux";
 import styled from "styled-components";
 
-const LeftSide =()=>{
+const LeftSide =(props)=>{
     return(
         <Container>
             <ArtCard>
                 <UserInfo>
                     <CardBackground/>
-                    <a>
-                        <Photo/>
+                        <Photo>
+                        <a>
+                        {props.user && props.user.photoURL ? (<img src={props.user.photoURL} alt=""/>):
+                            <img src="images/user.png"/>}
+                              </a>
+                        </Photo>
                         <Link>Welcome, there</Link>
-                    </a>
+                  
                     <a>
                         <AddPhotoText>
                             Add a Photo
@@ -88,18 +93,23 @@ height:54px;
 margin: -12px -12px 0;
 `;
 const Photo = styled.div`
-background: url("/images/photo.svg");
-width:72px;
-height:72px;
+width:70px;
+height:70px;
+display:flex;
+justify-content:center;
+align-items:center;
 box-sizing:border-box;
-background-clip:content-box;
 background-color:white;
-background-position:center;
-background-size:60%;
-background-repeat: no-repeat;
 border: 2px solid white;
 margin:-38px auto 12px;
 border-radius:50%;
+
+img{
+width:60px;
+height:60px;
+border:2p solid red;
+border-radius:50%;
+}
 `;
 const Link = styled.div`
 font-size:16px;
@@ -196,4 +206,13 @@ background-color:rgba(0, 0, 0, 0.08);
 }
 }
 `
-export default LeftSide;
+
+const mapStateToProps = (state) =>{
+    return {
+        user: state.userState.user,
+    }
+};
+
+const mapDispatchToProps = (dispatch) =>({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeftSide);

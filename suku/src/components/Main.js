@@ -1,10 +1,12 @@
+import { connect } from "react-redux";
 import styled from "styled-components";
 
 const Main = (props)=> (
     <Container>
         <ShareBox>
             <div>
-                <img src="/images/user.svg" />
+                {props.user && props.user.photoURL ? (<img src={props.user.photoURL} alt=""/>):
+                <img src="/images/user.png" />}
                 <button>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="compose-small" aria-hidden="true" role="none" data-supported-dps="16x16" fill="currentColor">
                         <path d="M15 2.53a1.51 1.51 0 01-.44 1L9.15 9 6 10l1-3.12 5.44-5.44A1.5 1.5 0 0115 2.53zM12 11a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1h3V2H5a3 3 0 00-3 3v6a3 3 0 003 3h6a3 3 0 003-3V8h-2z"></path>
@@ -19,7 +21,7 @@ const Main = (props)=> (
                 </button>
 
                 <button>
-                    <img src="/images/play.svg" alt="" />
+                    <img src="/images/video.png" alt="" />
                     <span>Video</span>
                 </button>
 
@@ -37,7 +39,8 @@ const Main = (props)=> (
         <Article>
             <SharedActor>
                 <a>
-                    <img src="/images/user.svg" alt="" />
+                    {props.user && props.user.photoURL ? (<img src={props.user.photoURL} alt=""/>) :
+                    <img src="/images/user.png" alt="" />}
                     <div>
                         <span>Title</span>
                         <span>Info</span>
@@ -49,6 +52,7 @@ const Main = (props)=> (
                 </button>
             </SharedActor>
             <Description>
+                Description
                 <SharedImg>
                     <a>
                         <img src="/images/ketone.jpg" alt=""/>
@@ -188,6 +192,10 @@ align-items:center;
 display:flex;
 overflow:hidden;
 
+img{
+border-radius:50%;
+}
+
 a{
 margin-right: 12px;
 flex-grow:1;
@@ -321,4 +329,16 @@ margin-right:5px;
 }
 }
 `;
-export default Main;
+
+const mapStateToProps = (state) => {
+    return{
+    user: state.userState.user,
+    }
+    
+};
+
+const mapDispatchToProps = (dispatch) => ({
+
+});
+
+export default connect (mapStateToProps, mapDispatchToProps)(Main)

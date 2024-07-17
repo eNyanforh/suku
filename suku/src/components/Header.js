@@ -1,3 +1,4 @@
+import { connect } from "react-redux";
 import styled from "styled-components";
 
 const Header = (props) => {
@@ -7,6 +8,7 @@ const Header = (props) => {
             <Logo>
                 <a href="/home">
                 <img src="/images/mycampus.png" alt=""/>
+               
                 </a>
             </Logo>
             <Search>
@@ -21,9 +23,7 @@ const Header = (props) => {
                 <NavListWrap>
                     <NavList className="active">
                         <a href="/home">
-                        
-<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="24" height="24"><path d="M19,24H5c-2.757,0-5-2.243-5-5V9.724c0-1.665,.824-3.215,2.204-4.145L9.203,.855c1.699-1.146,3.895-1.146,5.594,0l7,4.724c1.379,.93,2.203,2.479,2.203,4.145v9.276c0,2.757-2.243,5-5,5Z"/></svg>
-
+                        <img src="/images/house-fill.svg" alt=""/>
                             <span>Home</span>
                         </a>
                     </NavList>
@@ -36,13 +36,13 @@ const Header = (props) => {
                     <NavList>
                         <a>
                         <img src="/images/star.svg"/>
-                            <span>Pathways</span>
+                            <span>Opportunities</span>
                         </a>
                     </NavList>
                     <NavList>
                         <a>
                         <img src="/images/envelope.svg" alt=""/>
-                            <span>Chat</span>
+                            <span>Chats</span>
                         </a>
                     </NavList>
                     <NavList>
@@ -54,7 +54,8 @@ const Header = (props) => {
 
                     <User>
                         <a>
-                            <img src="/images/user.png" alt=""/>
+                            {props.user && props.user.photoURL ? (<img src={props.user.photoURL} alt=""/>):
+                            <img src="/images/user.png" alt=""/>}
                             <span>Me
                             <img src="/images/down-icon.svg" alt=""/>
                             </span>
@@ -84,7 +85,7 @@ position:fixed;
 left:0;
 top:0;
 border-bottom:1px solid rgba(0, 0, 0, 0.08);
-padding:0 24px;
+padding:0;
 width:100vw;
 z-index:100;
 `;
@@ -99,8 +100,19 @@ max-width:1128px;
 const Logo = styled.div`
 margin-right:8px;
 margin-top:3px;
+font-size: 32px;
 img{
 width:38px;
+margin-right:7px;
+}
+
+a{
+display:flex;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+color:#0B60B0;
+font-weight:bold;
 }
 `
 const Search = styled.div`
@@ -173,12 +185,15 @@ cursor:pointer;
       width: 100%;
       border-color: rgba(0, 0, 0, 0.9);
     }
+
+    &:hover{
+    background-color:white;
+    }
   }
 `;
 const NavList = styled.li`
 display:flex;
 align-items:center;
-
 
  &:hover {
       background-color:rgba(0, 0, 0, 0.1);
@@ -200,24 +215,6 @@ position:relative;
 min-width:80px;
 text-decoration:none;
 
-
-// span:after{
-// background-color:black;
-//         border-radius: 0px 0px 4px 4px;
-//         bottom: 0;
-//         content: "";
-//         height: 2px;
-//         left: 0px;
-//         opacity: 0;
-//         position: absolute;
-//         right: 0px;
-//         transform-origin: left center;
-//         transform: scaleX(0);
-//         transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
-//         visibility: hidden;
-//         width: auto;
-// }
-
 span{
 color: rgba(0, 0, 0, 1);
 display:flex;
@@ -237,26 +234,28 @@ background-color:#fff;
 border-radius:0px 0px 5px 5px;
 width:100px;
 height:40px;
-font-size:16px;
+// font-size:16px;
 transition-duration: 167ms;
 text-align:center;
 color:black;
 display:none;
 `;
 
-const User = styled.div`
-cursor:pointer;
+const User = styled(NavList)`
+background-color:white;
 a > img {
 width:26px;
-height:25px;
+height:26px;
+border-radius:50%;
 }
-
 span {
 display:flex;
 align-items:center;
+font-size:12px;
 }
 
 &:hover {
+background-color:white;
 ${SignOut}{
 align-items:center;
 display:flex;
@@ -267,7 +266,6 @@ justify-content:center;
 `;
 const Learn = styled(User)`
 border-left: 1px solid rgba(0, 0, 0, 0.08);
-padding:0;
 
 a > img{
 border-radius:0;
@@ -282,7 +280,15 @@ background-color:white;
 }
 `;
 
+const mapStateToProps = (state) =>{
+    return{
+        user: state.userState.user,
+    }
+};
+
+const mapDispatchToProps = (dispatch) =>{
+
+}
 
 
-
-export default Header;
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
