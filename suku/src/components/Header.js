@@ -6,7 +6,7 @@ const Header = (props) => {
            <Content>
             <Logo>
                 <a href="/home">
-                <img src="/images/home-logo.svg" alt=""/>
+                <img src="/images/mycampus.png" alt=""/>
                 </a>
             </Logo>
             <Search>
@@ -21,38 +21,40 @@ const Header = (props) => {
                 <NavListWrap>
                     <NavList className="active">
                         <a href="/home">
-                            <img src="/images/nav-home.svg" alt=""/>
+                        
+<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="24" height="24"><path d="M19,24H5c-2.757,0-5-2.243-5-5V9.724c0-1.665,.824-3.215,2.204-4.145L9.203,.855c1.699-1.146,3.895-1.146,5.594,0l7,4.724c1.379,.93,2.203,2.479,2.203,4.145v9.276c0,2.757-2.243,5-5,5Z"/></svg>
+
                             <span>Home</span>
                         </a>
                     </NavList>
                     <NavList>
                         <a href="/network">
-                            <img src="/images/nav-network.svg" alt=""/>
+                        <img src="/images/users-alt.svg" alt=""/>
                             <span>Network</span>
                         </a>
                     </NavList>
                     <NavList>
                         <a>
-                            <img src="/images/nav-jobs.svg" alt=""/>
-                            <span>Jobs</span>
+                        <img src="/images/star.svg"/>
+                            <span>Pathways</span>
                         </a>
                     </NavList>
                     <NavList>
                         <a>
-                            <img src="/images/nav-messaging.svg" alt=""/>
-                            <span>Messaging</span>
+                        <img src="/images/envelope.svg" alt=""/>
+                            <span>Chat</span>
                         </a>
                     </NavList>
                     <NavList>
                         <a>
-                            <img src="/images/nav-notifications.svg" alt=""/>
+                        <img src="/images/bell.svg" alt=""/>
                             <span>Notifications</span>
                         </a>
                     </NavList>
 
                     <User>
                         <a>
-                            <img src="/images/user.svg" alt=""/>
+                            <img src="/images/user.png" alt=""/>
                             <span>Me
                             <img src="/images/down-icon.svg" alt=""/>
                             </span>
@@ -61,15 +63,14 @@ const Header = (props) => {
                             <a>Sign out</a>
                         </SignOut>
                     </User>
-                    <Work>
+                    <Learn>
                         <a>
-                            <img src="/images/nav-work.svg" alt=""/>
-                            <span>
-                                Work
+                        <img src="/images/graduation-cap.gif" alt=""/>
+                                {/* <span>Learn
                                 <img src="/images/down-icon.svg" alt=""/>
-                            </span>
+                            </span> */}
                         </a>
-                    </Work>
+                    </Learn>
                 </NavListWrap>
                 </Nav>
            </Content>
@@ -97,12 +98,16 @@ max-width:1128px;
 
 const Logo = styled.div`
 margin-right:8px;
+margin-top:3px;
+img{
+width:38px;
+}
 `
-
 const Search = styled.div`
 opacity:1;
 flex-grow:1;
 position:relative;
+
 
 & > div {
 max-width:280px;
@@ -111,9 +116,9 @@ input{
 border:none;
 box-shadow:none;
 background-color:#eef3e8;
-border-radius:2px;
+border-radius:20px;
 color:rgba(0, 0, 0, 0.9);
-width:218px;
+width:300px;
 padding:0 8px 0 40px;
 line-height:1.75;
 font-weight:400;
@@ -154,24 +159,33 @@ const NavListWrap = styled.ul`
 display:flex;
 flex-wrap: nowrap;
 list-style-type:none;
+cursor:pointer;
 
 .active {
-span:after{
-content:" ";
-transform:scaleX(1);
-border-bottom:2px solid rgba(0, 0, 0, 0.9);
-bottom:0;
-left:0;
-position:absolute;
-transition: transform 0.2s ease-in-out;
-width:100%;
-}
-}
+    span:after {
+      content: "";
+      transform: scaleX(1);
+      border-bottom: 2px solid var(--white, #fff);
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      transition: transform 0.2s ease-in-out;
+      width: 100%;
+      border-color: rgba(0, 0, 0, 0.9);
+    }
+  }
 `;
 const NavList = styled.li`
 display:flex;
 align-items:center;
 
+
+ &:hover {
+      background-color:rgba(0, 0, 0, 0.1);
+      border-radius:5px;
+      transition-duration:250ms;
+      }
+    
 a{
 display:flex;
 align-items:center;
@@ -186,23 +200,32 @@ position:relative;
 min-width:80px;
 text-decoration:none;
 
+
+// span:after{
+// background-color:black;
+//         border-radius: 0px 0px 4px 4px;
+//         bottom: 0;
+//         content: "";
+//         height: 2px;
+//         left: 0px;
+//         opacity: 0;
+//         position: absolute;
+//         right: 0px;
+//         transform-origin: left center;
+//         transform: scaleX(0);
+//         transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+//         visibility: hidden;
+//         width: auto;
+// }
+
 span{
-color: rgba(0, 0, 0, 0.6);
+color: rgba(0, 0, 0, 1);
 display:flex;
 align-items:center;
 }
 
 @media (max-width:768px) {
 min-width:70px;
-}
-}
-
-&:hover,
-&:active {
-a{
-span{
-color:rgba(0, 0, 0, 0.9);
-}
 }
 }
 `;
@@ -221,11 +244,11 @@ color:black;
 display:none;
 `;
 
-const User = styled(NavList)`
+const User = styled.div`
+cursor:pointer;
 a > img {
-width:24px;
-height:24px;
-border-radius:50%;
+width:26px;
+height:25px;
 }
 
 span {
@@ -242,10 +265,22 @@ justify-content:center;
 }
 
 `;
-const Work = styled(User)`
-border-left: 1px solid rgba(0, 0, 0, 0.08)
-`;
+const Learn = styled(User)`
+border-left: 1px solid rgba(0, 0, 0, 0.08);
+padding:0;
 
+a > img{
+border-radius:0;
+margin-bottom:0;
+width:50px;
+height:50px;
+background-color:red;
+}
+
+&:hover{
+background-color:white;
+}
+`;
 
 
 

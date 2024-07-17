@@ -5,7 +5,11 @@ const Main = (props)=> (
         <ShareBox>
             <div>
                 <img src="/images/user.svg" />
-                <button>Start a post</button>
+                <button>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="compose-small" aria-hidden="true" role="none" data-supported-dps="16x16" fill="currentColor">
+                        <path d="M15 2.53a1.51 1.51 0 01-.44 1L9.15 9 6 10l1-3.12 5.44-5.44A1.5 1.5 0 0115 2.53zM12 11a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1h3V2H5a3 3 0 00-3 3v6a3 3 0 003 3h6a3 3 0 003-3V8h-2z"></path>
+                    </svg>
+                    Start a post</button>
             </div>
 
             <div>
@@ -15,7 +19,7 @@ const Main = (props)=> (
                 </button>
 
                 <button>
-                    <img src="/images/video-icon.svg" alt="" />
+                    <img src="/images/play.svg" alt="" />
                     <span>Video</span>
                 </button>
 
@@ -127,7 +131,11 @@ font-weight:bold;
 display:flex;
 align-items:center;
 padding:8px 16px 0px 16px;
-background-color:red;
+
+svg{
+display:none;
+}
+
 
 img{
 width:48px;
@@ -212,7 +220,7 @@ color: rgba(0, 0, 0, 1);
 
 &:nth-child(n+1){
 font-size: 12px;
-color: rgba(0, 0, 0, 0.6)
+color: rgba(0, 0, 0, 0.6);
 }
 }
 }
@@ -264,7 +272,6 @@ height:100%;
 
 const SocialCounts = styled.ul`
 width:100%;
-// background-color:red;
 margin:auto;
 line-height:1.3;
 display:flex;
@@ -278,14 +285,16 @@ list-style:none;
 li{
 margin-right: 5px;
 font-size:12px;
+color:rgba(0, 0, 0, 0.6);
 
 button{
 display:flex;
 border:none;
 background:transparent;
 text-align:left;
-// border:1px solid red;
 padding:0;
+color:rgba(0, 0, 0, 0.6);
+
 }
 `;
 
@@ -301,7 +310,8 @@ button{
 display:inline-flex;
 align-items:center;
 padding:8px;
-color:#0a66c2;
+color: rgba(0, 0, 0, 0.6);
+font-weight:600;
 border:none;
 background-color:transparent;
 
