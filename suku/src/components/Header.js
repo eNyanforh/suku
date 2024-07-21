@@ -1,5 +1,7 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { signOutAPI } from "../actions";
+
 
 const Header = (props) => {
     return(
@@ -29,30 +31,30 @@ const Header = (props) => {
                     </NavList>
                     <NavList>
                         <a href="/network">
-                        <img src="/images/users-alt.svg" alt=""/>
+                        <img src="/images/user-fill.svg" alt=""/>
                             <span>Network</span>
                         </a>
                     </NavList>
                     <NavList>
                         <a>
-                        <img src="/images/star.svg"/>
+                        <img src="/images/star-fill.svg"/>
                             <span>Opportunities</span>
                         </a>
                     </NavList>
                     <NavList>
                         <a>
-                        <img src="/images/envelope.svg" alt=""/>
+                        <img src="/images/envelope-fill.svg" alt=""/>
                             <span>Chats</span>
                         </a>
                     </NavList>
                     <NavList>
                         <a>
-                        <img src="/images/bell.svg" alt=""/>
+                        <img src="/images/bell-fill.svg" alt=""/>
                             <span>Notifications</span>
                         </a>
                     </NavList>
 
-                    <User>
+                    {/* <User>
                         <a>
                             {props.user && props.user.photoURL ? (<img src={props.user.photoURL} alt=""/>):
                             <img src="/images/user.png" alt=""/>}
@@ -60,10 +62,10 @@ const Header = (props) => {
                             <img src="/images/down-icon.svg" alt=""/>
                             </span>
                         </a>
-                        <SignOut>
+                        <SignOut onClick={() => props.signOut()}>
                             <a>Sign out</a>
                         </SignOut>
-                    </User>
+                    </User> */}
                     <Learn>
                         <a>
                         <img src="/images/graduation-cap.gif" alt=""/>
@@ -183,8 +185,11 @@ cursor:pointer;
       position: absolute;
       transition: transform 0.2s ease-in-out;
       width: 100%;
-      border-color: rgba(0, 0, 0, 0.9);
+      border-color: rgba(0, 0, 0, 0.9); 
     }
+span{
+color:black;
+}
 
     &:hover{
     background-color:white;
@@ -216,7 +221,8 @@ min-width:80px;
 text-decoration:none;
 
 span{
-color: rgba(0, 0, 0, 1);
+color: rgba(0, 0, 0, 0.6);
+font-weight:600;
 display:flex;
 align-items:center;
 }
@@ -276,7 +282,7 @@ background-color:red;
 }
 
 &:hover{
-background-color:white;
+opacity:0.7;
 }
 `;
 
@@ -286,9 +292,8 @@ const mapStateToProps = (state) =>{
     }
 };
 
-const mapDispatchToProps = (dispatch) =>{
-
-}
-
+const mapDispatchToProps = (dispatch) =>({
+    signOut: () => dispatch(signOutAPI()),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

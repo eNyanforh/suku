@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
+import { signOutAPI } from "../actions";
 
 const LeftSide =(props)=>{
     return(
@@ -13,48 +14,39 @@ const LeftSide =(props)=>{
                             <img src="images/user.png"/>}
                               </a>
                         </Photo>
-                        <Link>Welcome, there</Link>
+                        <Link>{props.user ? props.user.displayName : "Full Name"}
+                        <p>{props.user.email}</p>
+                        </Link>
                   
                     <a>
-                        <AddPhotoText>
-                            Add a Photo
-                        </AddPhotoText>
+                        <EditProfileText>
+                           Edit Profile
+                        </EditProfileText>
                     </a>
                 </UserInfo>
-
-                <Widget>
-                    <a>
-                        <div>
-                            <span>Connection</span>
-                            <span>Grow your Network</span>
-                        </div>
-                        <img src="/images/widget-icon.svg" alt=""/>
-                    </a>
-                </Widget>
-                <Item>
-                    <span>
-                        <img src="/images/item-icon.svg" alt=""/>
-                        My Items
-                    </span>
-                </Item>
             </ArtCard>
             <CommunityCard>
                 <a>
-                    <span>Groups</span>
-                </a>
-                <a>
                     <span>
-                        Events
-                        <img src="/images/plus-icon.svg" alt=""/>
+                        Profile views
+                    </span>
+                    <span>
+                        0
                     </span>
                 </a>
-                <a>
-                    <span>Follow Hashtags</span>
-                </a>
-                <a>
-                    <span>Discover more</span>
-                </a>
             </CommunityCard>
+
+            <SignOut onClick={() => props.signOut()}>
+                <a>
+                    <span>
+                       Log out
+                    </span>
+                    <span>
+                        <img src="/images/logout.png"/>
+                    </span>
+                   
+                </a>
+            </SignOut>
         </Container>
     )
 }
@@ -112,100 +104,73 @@ border-radius:50%;
 }
 `;
 const Link = styled.div`
-font-size:16px;
+font-size:20px;
 line-height: 1.5;
 color: rgba(0, 0, 0, 0.9);
 font-weight:600;
+overflow:hidden;
+white-space:nowrap;
+ text-overflow: ellipsis;
+ margin-top:-12px;
+
+ p{
+ font-weight:400;
+ color: rgba(0, 0, 0, 0.6);
+ font-size:16px;
+
+ }
 `;
-const AddPhotoText = styled.div`
+const EditProfileText = styled.div`
 color: #0a66c2;
 margin-top:4px;
-font-size:12px;
+font-size:14px;
 line-height:1.33;
-font-weight:400;
-`;
-
-const Widget = styled.div`
-border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-padding-top:12px;
-padding-bottom:12px;
-
-& > a {
-text-decoration:none;
-display:flex;
-justify-content: space-between;
-align-items:center;
-padding: 4px 12px;
+font-weight:bold;
 
 &:hover{
-background-color:rgba(0, 0, 0, 0.08);
-}
-
-div {
-display:flex;
-flex-direction:column;
-text-algin:left;
-
-span{
-font-size:12px;
-line-height:1.33;
-&:first-child {
-color: rgba(0, 0, 0, 0.6);
-}
-&:nth-child(2) {
-color:rgba(0, 0, 0, 1);
-}
-}
-}
-}
-`;
-const Item = styled.a`
-border-color: rgba(0, 0, 0, 0.8);
-text-align:left;
-padding:12px;
-font-size:12px;
-display:block;
-span {
-display:flex;
-align-items:center;
-color: rgba(0, 0, 0, 1);
-}
-&:hover{
-background-color:rgba(0, 0, 0, 0.08)
+color:#40A2D8
 }
 `;
 
 const CommunityCard = styled(ArtCard)`
-padding: 8px 0 0;
 text-align:left;
 display:flex;
-flex-direction: column;
+background-color:white;
+color:rgba(0,0,0, 0.6);
+
+&:hover{
+    cursor:pointer;
+    color:#40A2D8;
+}
 a{
-color:black;
-padding: 4px 12px 4px 12px;
-font-size:12px;
-
-&:hover{
-color:#0a66c2;
-}
-
-span{
-display:flex;
-align-items:center;
-justify-content:space-between; 
-}
-
-&:last-child {
-color:rgba(0, 0, 0, 0.6);
-border-top:1px solid #d6cec2;
 padding:12px;
+font-size:16px;
+font-weight:bold;
+display:flex;
+justify-content:space-between;
+align:center;
+width:100%;
+height:100%;
+
+}
+
+`
+const SignOut = styled(CommunityCard)`
+background-color:#2A629A;
+color:#fff;
+cursor:pointer;
+font-weight:bold;
+
+img{
+width:21px;
+}
+
 
 &:hover{
-background-color:rgba(0, 0, 0, 0.08);
+background-color:#134B70;
+color:white;
 }
-}
-}
-`
+`;
 
 const mapStateToProps = (state) =>{
     return {
@@ -213,6 +178,8 @@ const mapStateToProps = (state) =>{
     }
 };
 
-const mapDispatchToProps = (dispatch) =>({});
+const mapDispatchToProps = (dispatch) =>({
+    signOut: () => dispatch(signOutAPI()),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftSide);
