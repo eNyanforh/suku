@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
 import React, {useState} from "react";
+import AllComponent from "./AllComponent";
 
 const Main = (props)=> {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -106,7 +107,7 @@ const Main = (props)=> {
                 </SocialActions> */}
             </Description>
             </About>
-            <All isExpanded={isExpanded}>
+            {/* <All isExpanded={isExpanded}>
            <h3>Description</h3>
            <p>Purpose and Core Features: Connecting students, helping them learn online, creating a marketplace for employers, storing academic records, facilitating student transfers, verifying grades, showcasing talents, and connecting like-minded students.</p>
            <button onClick={handleToggle}>
@@ -132,7 +133,8 @@ const Main = (props)=> {
 </svg>
                 </CloseIcon>
             </Search>
-            </All>
+            </All> */}
+            <AllComponent/>
         </Article>
     </Container>
 )}
@@ -272,19 +274,8 @@ const All = styled.div`
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: ${({ isExpanded }) => (isExpanded ? 'none' : 3)};
+        -webkit-line-clamp: 3; /* Adjust the line clamp as needed */
         -webkit-box-orient: vertical;
-    }
-    
-    .read-more {
-        display: ${({ showButton }) => (showButton ? 'block' : 'none')};
-        margin-top: 10px;
-        background: none;
-        border: none;
-        color: blue;
-        cursor: pointer;
-        font-size: 14px;
-        text-decoration: underline;
     }
 `;
 
