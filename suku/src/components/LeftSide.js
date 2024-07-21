@@ -2,184 +2,187 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { signOutAPI } from "../actions";
 
-const LeftSide =(props)=>{
-    return(
+const LeftSide = (props) => {
+    const user = props.user || {}; // Default to an empty object
+    const email = user.email ? user.email.split('@')[0] : "No email provided";
+
+    return (
         <Container>
             <ArtCard>
                 <UserInfo>
-                    <CardBackground/>
-                        <Photo>
+                    <CardBackground />
+                    <Photo>
                         <a>
-                        {props.user && props.user.photoURL ? (<img src={props.user.photoURL} alt=""/>):
-                            <img src="images/user.png"/>}
-                              </a>
-                        </Photo>
-                        <Link>{props.user ? props.user.displayName : "Full Name"}
-                        <p>{props.user.email}</p>
-                        </Link>
-                  
+                            <img src={user.photoURL || "images/user.png"} alt="User" />
+                        </a>
+                    </Photo>
+                    <Link>
+                        {user.displayName || "Full Name"}
+                        <p>{email}</p>
+                    </Link>
                     <a>
-                        <EditProfileText>
-                           Edit Profile
-                        </EditProfileText>
+                        <EditProfileText>Edit Profile</EditProfileText>
                     </a>
                 </UserInfo>
             </ArtCard>
             <CommunityCard>
                 <a>
-                    <span>
-                        Profile views
-                    </span>
-                    <span>
-                        0
-                    </span>
+                    <span>Profile views</span>
+                    <span>0</span>
                 </a>
             </CommunityCard>
-
             <SignOut onClick={() => props.signOut()}>
                 <a>
-                    <span>
-                       Log out
-                    </span>
-                    <span>
-                        <img src="/images/logout.png"/>
-                    </span>
-                   
+                    <span>Log out</span>
+                    <span><img src="/images/logout.png" alt="Log out" /></span>
                 </a>
             </SignOut>
         </Container>
-    )
-}
+    );
+};
 
 const Container = styled.div`
-grid-area: leftside;
+    grid-area: leftside;
 
-@media (max-width:768px) {
-display:none;
-}
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const ArtCard = styled.div`
-text-align:center;
-overflow:hidden;
-margin-bottom:8px;
-background-color:#fff;
-border-radius:5px;
-transition:box-shadow 83s;
-position:relative;
-border:none;
-box-shadow: 0 0 0 1px rgb(0 0 0/ 15%), 0 0 0 rgb(0 0 0/20%);
+    text-align: center;
+    overflow: hidden;
+    margin-bottom: 8px;
+    background-color: #fff;
+    border-radius: 5px;
+    transition: box-shadow 0.3s ease;
+    position: relative;
+    border: none;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0 / 20%);
+`;
+
+const CardBackground = styled.div`
+    background: url("/images/card-bg.svg") no-repeat center center;
+    background-size: cover;
+    height: 60px;
+    margin: -10px -10px 0;
+    border-radius: 5px 5px 0 0;
+`;
+
+const Photo = styled.div`
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: white;
+    border: 3px solid #40a2d8;
+    margin: -40px auto 15px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    &:hover {
+        border-color: #134b70;
+    }
 `;
 
 const UserInfo = styled.div`
-border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-padding: 12px 12px 16px;
-word-wrap: break-word;
-word-break: break-word;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 20px 16px 20px;
+    word-wrap: break-word;
+    word-break: break-word;
 `;
-const CardBackground = styled.div`
-background:url("/images/card-bg.svg");
-background-position: center;
-background-size: 462px;
-height:54px;
-margin: -12px -12px 0;
-`;
-const Photo = styled.div`
-width:70px;
-height:70px;
-display:flex;
-justify-content:center;
-align-items:center;
-box-sizing:border-box;
-background-color:white;
-border: 2px solid white;
-margin:-38px auto 12px;
-border-radius:50%;
 
-img{
-width:60px;
-height:60px;
-border:2p solid red;
-border-radius:50%;
-}
-`;
 const Link = styled.div`
-font-size:20px;
-line-height: 1.5;
-color: rgba(0, 0, 0, 0.9);
-font-weight:600;
-overflow:hidden;
-white-space:nowrap;
- text-overflow: ellipsis;
- margin-top:-12px;
+    font-size: 22px;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.9);
+    font-weight: 700;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-top: -10px;
 
- p{
- font-weight:400;
- color: rgba(0, 0, 0, 0.6);
- font-size:16px;
-
- }
+    p {
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.6);
+        font-size: 18px;
+        margin-top: 5px;
+    }
 `;
-const EditProfileText = styled.div`
-color: #0a66c2;
-margin-top:4px;
-font-size:14px;
-line-height:1.33;
-font-weight:bold;
 
-&:hover{
-color:#40A2D8
-}
+const EditProfileText = styled.div`
+    color: #0a66c2;
+    margin-top: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+        color: #40a2d8;
+        text-decoration: underline;
+    }
 `;
 
 const CommunityCard = styled(ArtCard)`
-text-align:left;
-display:flex;
-background-color:white;
-color:rgba(0,0,0, 0.6);
+    text-align: left;
+    display: flex;
+    background-color: #f9f9f9;
 
-&:hover{
-    cursor:pointer;
-    color:#40A2D8;
-}
-a{
-padding:12px;
-font-size:16px;
-font-weight:bold;
-display:flex;
-justify-content:space-between;
-align:center;
-width:100%;
-height:100%;
+    a {
+        padding: 15px;
+        font-size: 18px;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+        color: inherit;
+    }
 
-}
-
-`
-const SignOut = styled(CommunityCard)`
-background-color:#2A629A;
-color:#fff;
-cursor:pointer;
-font-weight:bold;
-
-img{
-width:21px;
-}
-
-
-&:hover{
-background-color:#134B70;
-color:white;
-}
+    &:hover {
+        background-color: #e3f2fd;
+    }
 `;
 
-const mapStateToProps = (state) =>{
-    return {
-        user: state.userState.user,
-    }
-};
+const SignOut = styled(CommunityCard)`
+    background-color: #2a629a;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
 
-const mapDispatchToProps = (dispatch) =>({
+    img {
+        width: 22px;
+        margin-left: 10px;
+    }
+
+    a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &:hover {
+        background-color: #134b70;
+        color: white;
+    }
+`;
+
+const mapStateToProps = (state) => ({
+    user: state.userState.user,
+});
+
+const mapDispatchToProps = (dispatch) => ({
     signOut: () => dispatch(signOutAPI()),
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftSide);

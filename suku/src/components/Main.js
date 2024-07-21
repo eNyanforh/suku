@@ -1,7 +1,14 @@
 import { connect } from "react-redux";
 import styled from "styled-components";
+import React, {useState} from "react";
 
-const Main = (props)=> (
+const Main = (props)=> {
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    const handleToggle = () => {
+        setIsExpanded(prevState => !prevState);
+    };
+   return(
     <Container>
         <ShareBox>
             <div>
@@ -43,6 +50,7 @@ const Main = (props)=> (
             </div>
         </ShareBox>
         <Article>
+            <About>   
             <SharedActor>
                 <a>
                     {props.user && props.user.photoURL ? (<img src={props.user.photoURL} alt=""/>) :
@@ -58,13 +66,13 @@ const Main = (props)=> (
                 </button>
             </SharedActor>
             <Description>
-                Description
+             
                 <SharedImg>
                     <a>
                         <img src="/images/ketone.jpg" alt=""/>
                     </a>
                 </SharedImg>
-                <SocialCounts>
+                {/* <SocialCounts>
                     <li>
                         <button>
                             <img src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb" alt=""/>
@@ -77,8 +85,8 @@ const Main = (props)=> (
                             2 comments
                         </a>
                     </li>
-                </SocialCounts>
-                <SocialActions>
+                </SocialCounts> */}
+                {/* <SocialActions>
                 <button>
                     <img src="/images/like.svg" alt=""/>
                     <span>Like</span>
@@ -95,11 +103,39 @@ const Main = (props)=> (
                     <img src="/images/send.svg" alt=""/>
                     <span>Send</span>
                 </button>
-                </SocialActions>
+                </SocialActions> */}
             </Description>
+            </About>
+            <All isExpanded={isExpanded}>
+           <h3>Description</h3>
+           <p>Purpose and Core Features: Connecting students, helping them learn online, creating a marketplace for employers, storing academic records, facilitating student transfers, verifying grades, showcasing talents, and connecting like-minded students.</p>
+           <button onClick={handleToggle}>
+                    {isExpanded ? 'Read less' : 'Read more'}
+                </button>
+            <ActiveHashtags>
+                #technology #arts #jobs
+            </ActiveHashtags>
+            <Title>
+                    <h3>Comments</h3>
+                </Title>
+            <Search>   
+                <div>
+                    <input type="text" placeholder="Make a comment"/>
+                </div>
+                <DropDownIcon>
+                <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="14" height="14" fill="gray"><path d="m.172,3.708C-.216,2.646.076,1.47.917.713,1.756-.041,2.951-.211,3.965.282l18.09,8.444c.97.454,1.664,1.283,1.945,2.273H4.048L.229,3.835c-.021-.041-.04-.084-.057-.127Zm3.89,9.292L.309,20.175c-.021.04-.039.08-.054.122-.387,1.063-.092,2.237.749,2.993.521.467,1.179.708,1.841.708.409,0,.819-.092,1.201-.279l18.011-8.438c.973-.456,1.666-1.288,1.945-2.28H4.062Z"/></svg>
+                </DropDownIcon>
+
+                <CloseIcon>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="clear-medium" aria-hidden="true" role="none" data-supported-dps="24x24" fill="gray">
+  <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12z"></path>
+</svg>
+                </CloseIcon>
+            </Search>
+            </All>
         </Article>
     </Container>
-)
+)}
 
 const Container = styled.div`
 grid-area:main;
@@ -215,7 +251,43 @@ const Article = styled(CommonCard)`
 padding:0;
 margin: 0 0 8px;
 overflow: visible;
+display:flex;
 `;
+
+const About = styled.div`
+width:60%;
+text-overflow:wrap;
+padding-bottom:10px;
+// background-color:red;
+position:relative;
+`;
+const All = styled.div`
+    flex: 1;
+    padding: 10px;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.9);
+    
+    p {
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: ${({ isExpanded }) => (isExpanded ? 'none' : 3)};
+        -webkit-box-orient: vertical;
+    }
+    
+    .read-more {
+        display: ${({ showButton }) => (showButton ? 'block' : 'none')};
+        margin-top: 10px;
+        background: none;
+        border: none;
+        color: blue;
+        cursor: pointer;
+        font-size: 14px;
+        text-decoration: underline;
+    }
+`;
+
 
 const SharedActor = styled.div`
 padding-right: 40px;
@@ -309,6 +381,7 @@ img{
 object-fit:contain;
 width:100%;
 height:100%;
+border-radius:10px;
 }
 `;
 
@@ -363,6 +436,75 @@ margin-right:5px;
 }
 }
 `;
+
+const ActiveHashtags = styled.ul`
+color:blue;
+font-weight:bold;
+font-size:14px;
+`;
+
+const Search = styled.div`
+margin-left:0;
+position:relative;
+margin-top:5px;
+
+
+& > div {
+
+text-align:left;
+input{
+border:none;
+box-shadow:none;
+background-color:#eef3e8;
+border-radius:20px;
+color:rgba(0, 0, 0, 0.9);
+width:100%;
+padding:0 40px 0 12px;
+line-height:1.75;
+font-weight:400;
+font-size:14px;
+height:34px;
+border-color:#dce6f1;
+box-sizing:border-box;
+}
+}
+`;
+
+const DropDownIcon = styled.div`
+width:40px;
+position:absolute;
+z-index:1;
+top:10px;
+right:2px;
+border-radius:0 2px 2px 0;
+margin:0;
+pointer-event:none;
+display:flex;
+justify-content:center;
+align-items:center;
+`;
+
+const CloseIcon = styled(DropDownIcon)`
+right: 20px;
+
+svg{
+width:16px;
+opacity:0;
+}
+`;
+
+const Title = styled.div`
+display:inline-flex;
+align-items:center;
+justify-content:space-between;
+font-size:16px;
+width:100%;
+color: rgba(0, 0, 0, 0.9);
+margin-top:10px;
+
+
+`;
+
 
 const mapStateToProps = (state) => {
     return{
